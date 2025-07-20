@@ -12,14 +12,14 @@ class Name(Field):
         if isinstance(value ,str) and value.strip() != "":
             super().__init__(value)
         else:
-            raise ValueError("Неприпустиме ім'я")
+            raise ValueError
 
 class Phone(Field):
     def __init__(self, value):
         if len(value) == 10 and value.isdigit():
             super().__init__(value)
         else:
-            raise ValueError("Невірний формат номера")
+            raise ValueError
 class Record:
     def __init__(self, name):
         self.name = Name(name)
@@ -30,14 +30,14 @@ class Record:
     def remove_phone(self , phone):
             phone_find = self.find_phone(phone)
             if not phone_find:
-                raise ValueError("Номер не знайдено")
+                raise ValueError
             self.phones.remove(phone_find)
 
     def edit_phone(self, old_phone: str, new_phone: str):
         if  not self.find_phone(old_phone):
-            raise ValueError ("номеру телефону не існує")
+            raise ValueError
+        self.add_phone(new_phone)
         self.remove_phone(old_phone)
-        self.add_phone(new_phone)  
     def find_phone(self, phone: str) :
         for p in self.phones:
             if p.value == phone:
@@ -59,7 +59,7 @@ class AddressBook(UserDict):
         if name  in self.data:
             del self.data[name]
         else:
-            return "Контакт не знайденоа"
+            return None
 
 book = AddressBook()
 
